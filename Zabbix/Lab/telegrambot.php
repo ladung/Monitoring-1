@@ -1,5 +1,7 @@
 #!/usr/bin/php
 
+# Reference: https://www.saschapapini.it/2019/10/30/zabbix-4-4-notifiche-telegram.html
+
 <?php
 
 $telegrambot='<inserire qui il bot token>';
