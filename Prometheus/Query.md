@@ -115,19 +115,19 @@ count_values("code", prometheus_http_requests_total)
 Kết quả
 ```sh
 
-Element	        Value
-{code="2"}	    1
-{code="162"}   	1
-{code="112"}    1
-{code="17"}	    1
-{code="124"}   	1
-{code="3"}	    1
-{code="6"}	    1
-{code="3894"}	  1
-{code="4"}    	2
-{code="21"}	    1
-{code="11"}	    2
-```
+|Element|Value|
+|-------|-----|
+|{code="2"}|1|
+|{code="162"}|1|
+|{code="112"}|1|
+|{code="17"}|1|
+|{code="124"}|1|
+|{code="3"}|1|
+|{code="6"}|1|
+|{code="3894"}|1|
+|{code="4"}|2|
+|{code="21"}|1|
+|{code="11"}|2|
 Lấy 5 giá trị HTTP requests lớn nhất của toàn bộ instances như sau:
 ```sh
 topk(5, http_requests_total)
