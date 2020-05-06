@@ -40,3 +40,4 @@ Ví dụ:
 
 ## Tài liệu tham khảo:
 - https://prometheus.io/docs/practices/rules/
+- https://github.com/infinityworks/prometheus-example-queries
