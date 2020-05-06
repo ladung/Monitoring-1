@@ -39,3 +39,5 @@ scrape_configs:
 ## Tài liệu tham khảo
 - https://www.robustperception.io/using-json-file-service-discovery-with-prometheus
 - https://prometheus.io/docs/prometheus/latest/configuration/configuration/
+- https://stuarthowlette.me.uk/posts/prometheus-consul-node_exporter/
+- https://prometheus.io/blog/2015/06/01/advanced-service-discovery/
