@@ -92,22 +92,22 @@ Query như sau:
 prometheus_http_requests_total
 ``` 
 Kết quả:
-```sh
-Element	                                                                                                                    Value
-prometheus_http_requests_total{code="200",handler="/alerts",instance="127.0.0.1:9090",job="prometheus"}	                    21
-prometheus_http_requests_total{code="200",handler="/api/v1/label/:name/values",instance="127.0.0.1:9090",job="prometheus"}	11
-prometheus_http_requests_total{code="200",handler="/api/v1/query",instance="127.0.0.1:9090",job="prometheus"}	              124
-prometheus_http_requests_total{code="200",handler="/api/v1/query_range",instance="127.0.0.1:9090",job="prometheus"}       	6
-prometheus_http_requests_total{code="200",handler="/config",instance="127.0.0.1:9090",job="prometheus"}	                    3
-prometheus_http_requests_total{code="200",handler="/graph",instance="127.0.0.1:9090",job="prometheus"}	                    11
-prometheus_http_requests_total{code="200",handler="/metrics",instance="127.0.0.1:9090",job="prometheus"}                    3894
-prometheus_http_requests_total{code="200",handler="/rules",instance="127.0.0.1:9090",job="prometheus"}	                    4
-prometheus_http_requests_total{code="200",handler="/service-discovery",instance="127.0.0.1:9090",job="prometheus"}        	2
-prometheus_http_requests_total{code="200",handler="/static/*filepath",instance="127.0.0.1:9090",job="prometheus"}	          162
-prometheus_http_requests_total{code="200",handler="/targets",instance="127.0.0.1:9090",job="prometheus"}	                  112
-prometheus_http_requests_total{code="302",handler="/",instance="127.0.0.1:9090",job="prometheus"}	                          4
-prometheus_http_requests_total{code="400",handler="/api/v1/query",instance="127.0.0.1:9090",job="prometheus"}	              17
-```
+|Element|Value|
+|-------|-----|
+|prometheus_http_requests_total{code="200",handler="/alerts",instance="127.0.0.1:9090",job="prometheus"}|21|
+|prometheus_http_requests_total{code="200",handler="/api/v1/label/:name/values",instance="127.0.0.1:9090",job="prometheus"}|11|
+|prometheus_http_requests_total{code="200",handler="/api/v1/query",instance="127.0.0.1:9090",job="prometheus"}|124|
+|prometheus_http_requests_total{code="200",handler="/api/v1/query_range",instance="127.0.0.1:9090",job="prometheus"}|6|
+|prometheus_http_requests_total{code="200",handler="/config",instance="127.0.0.1:9090",job="prometheus"}|3|
+|prometheus_http_requests_total{code="200",handler="/graph",instance="127.0.0.1:9090",job="prometheus"}|11|
+|prometheus_http_requests_total{code="200",handler="/metrics",instance="127.0.0.1:9090",job="prometheus"}|3894|
+|prometheus_http_requests_total{code="200",handler="/rules",instance="127.0.0.1:9090",job="prometheus"}|4|
+|prometheus_http_requests_total{code="200",handler="/service-discovery",instance="127.0.0.1:9090",job="prometheus"}|2|
+|prometheus_http_requests_total{code="200",handler="/static/*filepath",instance="127.0.0.1:9090",job="prometheus"}|162|
+|prometheus_http_requests_total{code="200",handler="/targets",instance="127.0.0.1:9090",job="prometheus"}|112|
+|prometheus_http_requests_total{code="302",handler="/",instance="127.0.0.1:9090",job="prometheus"}|4|
+|prometheus_http_requests_total{code="400",handler="/api/v1/query",instance="127.0.0.1:9090",job="prometheus"}|17|
+
 Đếm số lượng `Element` có cùng `Value` sử dụng lable `code`
 ```sh
 count_values("code", prometheus_http_requests_total)
