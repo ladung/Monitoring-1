@@ -1,4 +1,42 @@
 # RECORDING RULES
 
+## 1. Naming and aggregation
+
+Recording rules nên sử dụng form chung như sau: `level:metric:operations`.
+
+- `level` đại diện cho aggregation level và labels của rule output.
+- `metric` là metric name không nên thay đổi trừ khi sử dụng `rate()` hoặc `irate()` thì bỏ `_total`. 
+- `operations` là danh sách các operations áp dụng cho metric, newest operation first.
+## 2. 
+
+Ví dụ:
+```sh
+- record: instance_path:requests:rate5m
+  expr: rate(requests_total{job="myjob"}[5m])
+```
+```sh
+- record: path:requests:rate5m
+  expr: sum without (instance)(instance_path:requests:rate5m{job="myjob"})
+```
+
+```sh
+- record: instance_path:request_failures:rate5m
+  expr: rate(request_failures_total{job="myjob"}[5m])
+
+- record: instance_path:request_failures_per_requests:ratio_rate5m
+  expr: |2 instance_path:request_failures:rate5m{job="myjob"} / instance_path:requests:rate5m{job="myjob"}
+
+# Aggregate up numerator and denominator, then divide to get path-level ratio.
+- record: path:request_failures_per_requests:ratio_rate5m
+  expr: |2
+      sum without (instance)(instance_path:request_failures:rate5m{job="myjob"}) / sum without (instance)(instance_path:requests:rate5m{job="myjob"})
+
+# No labels left from instrumentation or distinguishing instances,
+# so we use 'job' as the level.
+- record: job:request_failures_per_requests:ratio_rate5m
+  expr: |2
+      sum without (instance, path)(instance_path:request_failures:rate5m{job="myjob"}) / sum without (instance, path)(instance_path:requests:rate5m{job="myjob"})
+```
+
 ## Tài liệu tham khảo:
 - https://prometheus.io/docs/practices/rules/
