@@ -16,7 +16,7 @@ Tạo file `targets.json` với nội dung sau:
     }
   },
   {
-    "targets": [ "192.158.1.3:8080" ],
+    "targets": [ "192.168.1.3:8080" ],
     "labels":
       "job": "cadvaisor"
   }
