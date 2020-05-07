@@ -32,7 +32,7 @@ Thực hiện query với tất cả device không bắt đầu bằng `eth`
 ```sh
 node_network_receive_bytes_total{device!~"eth.+"}
 ```
-Filter theo nhiều label `instance="node42:9100"` và `device=~"eth.+"`
+Filter theo nhiều label `instance="node1:9100"` và `device=~"eth.+"`
 ```sh
 node_network_receive_bytes_total{instance="node42:9100",device=~"eth.+"}
 ```
