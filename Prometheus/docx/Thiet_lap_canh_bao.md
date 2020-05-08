@@ -72,7 +72,7 @@ Nếu alert hoạt động sẽ có value là 1, ko hoạt động sẽ có valu
   ```sh
   group_by: ['alertname', 'cluster', 'service']
   ```
-Ví dụ ở trên, ta sẽ gộp nhóm theo các `label` mà ta đã cấu hình, cụ thể là alertname, cluster và service.
+Ví dụ ở trên, ta sẽ gộp nhóm theo các `label` mà ta đã cấu hình, cụ thể là `alertname`, `cluster` và `service`.
 
   - **Inhibiton:** Sẽ bỏ đi các cảnh báo nhất định nếu một số cảnh báo khác đã được bắn. Ví dự như ta có cụm 1 cụm cluster 100 server bị mất kết nối internet đột ngột. Trên các server này ta có đặt các báo về network, web-server, mysql,... Đo đó, khi mà mất kết nối internet thì tất các cách dịch vụ này đều gửi cảnh báo đến sysadmin. Sử dụng Inhibiton thì khi cảnh báo network được gửi đến sysadmin và các cảnh báo về web-server, mysql sẽ không gửi cần phải gửi đến sysadmin nữa.
 ```sh
@@ -91,8 +91,7 @@ Ví dụ ở trên: Nếu mà thông báo `critical` đã được gửi đi th�
   - **Routes:** Định tuyến đường đi của notification. Có các route con với các match của nó. Nếu notification trùng với match của route nào đó, thì sẽ được gửi đi theo đường đó. Còn không match với route nào, nó sẽ được gửi theo đường đi mặc định.
   - **Receivers:** Cấu hình thông tin các nơi nhận. Ví dụ như tên đăng nhập, mật khẩu, tên mail sẽ gửi đến,....
 
-
-# 3. Demo Alert
+## 3. Demo Alert
 
 - Device "/" còn trống 44GB
 
@@ -136,7 +135,7 @@ fallocate -l 15G /tmp/test.img
 
 ![plugincpu](/Images/Alert-3.png)
 
-# 4. Alert và một vài vấn đề nâng cao.
+## 4. Alert và một vài vấn đề nâng cao.
 
 <a name="dinhtuyen"></a>
 ## 4.1. Định tuyến các đường đi của thông báo:
@@ -147,7 +146,7 @@ global:
   smtp_smarthost: 'smtp.gmail.com:587'
   smtp_from: 'sender@gmail.com'
   smtp_auth_username: 'sender@gmail.com'
-  smtp_auth_password: 'abcxyz@123'
+  smtp_auth_password: '123@123'
 #route default
 route:
   group_by: ['alertname']
@@ -207,7 +206,7 @@ receivers:
   smtp_smarthost: 'smtp.gmail.com:587'
   smtp_from: 'sender@gmail.com'
   smtp_auth_username: 'sender@gmail.com'
-  smtp_auth_password: 'abcxyz@123'
+  smtp_auth_password: '123@123'
 ```
 Cụ thể là ở đây tôi cấu hình những thông tin cần thiết để có thể gửi cảnh báo đến 1 hộp thư gmail.
 
@@ -223,9 +222,9 @@ route:
   receiver: default
 ```
     - group_by: Dòng này có ý nghĩa prometheus sẽ gom những thông báo có cùng `alertname` vào 1 thông báo, và chỉ gửi duy
-    nhất 1 thông báo mà thôi. Tất nhiên là trong 1 thông báo này sẽ có chứa những thông báo riêng rẽ. Chi tết xem ở phần thử nghiệm tính năng group ở phần dưới.
+    nhất 1 thông báo mà thôi. Tất nhiên là trong 1 thông báo này sẽ có chứa những thông báo riêng rẽ. Chi tết xem ở phần thử nghiệm tính     năng group ở phần dưới.
     - group_wait: Sau khi một cảnh báo được taọ ra. Phải đợi khoảng thời gian này thì cảnh báo mới được gửi đi.
-    - group_interval: Sau khi cảnh báo đầu tiên gửi đi, phải đợi 1 khoảng thời gian được cấu hình ở đây thì các cảnh báo sau mới được gửi đi.
+    - group_interval: Sau khi cảnh báo đầu tiên gửi đi, phải đợi 1 khoảng thời gian được cấu hình ở đây thì các cảnh báo sau mới được       gửi đi.
     - repeat_interval: 3h: Sau khi cảnh báo được gửi đi thành công. Sau khoảng thời gian này, nếu vấn đề vẫn còn tồn tại,
     prometheus sẽ tiếp tục gửi đi cảnh báo sau khoảng thời gian này.
 
@@ -277,7 +276,7 @@ receivers:
     api_url: 'https://hooks.slack.com/services/xxxxxxxxxxx/xxxxxxxxxxx/xxxxxxxxxx'
 ```
 
-Nơi nhận mặc đinh: Thông báo cùng lúc sẽ được gửi đến các địa chỉ sysadmin1@gmail.com, sysadmin2@gmail.com và channel default của kênh slack.
+Nơi nhận mặc định: Thông báo cùng lúc sẽ được gửi đến các địa chỉ `sysadmin1@gmail.com`, `sysadmin2@gmail.com` và `channel default` của kênh slack.
 
 Ngoài ra ta có thể cấu hình bổ sung thêm các đường đi khác.
 ```sh
@@ -297,18 +296,25 @@ Ngoài ra ta có thể cấu hình bổ sung thêm các đường đi khác.
 
 <a name="vande"></a>
 ## 4.2. Dựa vào phần định tuyến đường đi, các vấn đề sau sẽ dễ dàng được giải quyết:
+
 - Gửi cảnh báo cùng lúc đến nhiều nơi.
 - Sau khi đẩy cảnh báo, nếu vẫn còn tồn tại vấn đề, sau một khoảng thời gian có thể tiếp tục đẩy cảnh báo đến người khác.
 - Phân mức cảnh báo, gửi đến các đối tượng khác nhau: 
+
 Việc phân mức cảnh báo sẽ là do mình tự đặt theo nhãn chứ không có sẵn các mức cảnh báo.
+
 Ví dụ như với cảnh báo A, thì có nhãn là `warning`, cảnh báo B sẽ có nhãn là `critical`.
+
 Thì trong phần cấu hình `route` đường đi của cảnh báo, mình sẽ dùng tùy chọn `match`, lọc ra các labels nào sẽ đi đường nào,có hỗ trợ match bằng cách dùng `regular expression`.
+
 - Tính năng im lặng, không gửi cảnh báo nào trong 1 khoảng thời gian. Có hỗ trợ, cấu hình trên giao diện web của alertmanager. (Silences)
 - Tính năng khi 1 cảnh báo được gửi đi thì có thể các cảnh báo khác không cần phải gửi đi nữa. (Inhibition)
 
 <a name="group"></a>
 ## 4.3. Thử nghiệm tính năng cảnh báo theo Group của Prometheus:
+
 Mô hình: Prometheus-server monitor 2 targets:
+
 - targets 1 - Hà Nội: MySQL replication: Service IO trong Replication (Up/Down).
 - targets 2 - Hồ Chí Minh: Service MYSQL (Up/Down).
 
@@ -330,6 +336,7 @@ ALERT MySQLstatus
 Chú ý trong phần cấu hình trên, tôi đặt nhãn của 2 cảnh bảo đều là `severity` với giá trị là `warning`.
 
 ### 4.3.1. Trường hợp 1: Để trống trong cấu hình Group_by: `Group_by []`
+
 - Hà Nội: Stop IO thread.
 - Hồ Chí Minh: Stop SQL service.
 
@@ -340,10 +347,11 @@ Chú ý trong phần cấu hình trên, tôi đặt nhãn của 2 cảnh bảo �
 ![](https://raw.githubusercontent.com/hocchudong/ghichep-prometheus/master/Images/Screenshot%20-%2003032017%20-%2015-20-57.png)
 
 ### 4.3.2. Trường hợp 2: Cấu hình Group_by theo **alertname**: `Group_by['alertname']`
+
 - Hà Nội: Stop IO thread.
 - Hồ Chí Minh: Stop SQL service.
 
-**=> 2 cảnh báo riêng rẻ được gửi đi.**
+**=> 2 cảnh báo riêng rẽ được gửi đi.**
 
 Giải thích: Bởi vì ở đây cấu hình Group_by theo alertname mà trong rules tôi cấu hình mỗi server có rules name khác nhau => 2 cảnh báo với 2 rules name khác nhau được gửi đi.
 
@@ -352,6 +360,7 @@ Giải thích: Bởi vì ở đây cấu hình Group_by theo alertname mà trong
 ![](https://raw.githubusercontent.com/hocchudong/ghichep-prometheus/master/Images/Screenshot%20-%2003032017%20-%2015-21-04.png)
 
 ### 4.3.3. Trường hợp 3: Cấu hình Group_by theo **severity**: `Group_by['severity']`
+
 - Hà Nội: Stop IO thread.
 - Hồ Chí Minh: Stop SQL service.
 
@@ -365,6 +374,7 @@ Giải thích: Bởi vì trong phần rules tôi cấu hình cảnh bảo 2 serv
 ![](https://raw.githubusercontent.com/hocchudong/ghichep-prometheus/master/Images/Screenshot%20-%2003032017%20-%2015-21-16.png)
 
 ### 4.3.4. Trường hợp 4: Comment Group_by: `#Group_by`
+
 - Hà Nội: Stop IO thread.
 - Hồ Chí Minh: Stop SQL service.
 
@@ -374,6 +384,7 @@ Giải thích: Bởi vì trong phần rules tôi cấu hình cảnh bảo 2 serv
 
 
 ### 4.3.4 Kết Luận
+
 - Khi không khai báo gì trong Group_by thì nó sẽ gom tất cả vào 1 thông báo.
 - Khi Comment Group_by thì nó mặc định sẽ gom thông báo theo `alertname`.
 ```sh
@@ -517,3 +528,4 @@ receivers:
 ```
 ## Tài liệu tham khảo
 - https://medium.com/@abhishekbhardwaj510/alertmanager-integration-in-prometheus-197e03bfabdf
+- https://github.com/hocchudong/ghichep-prometheus/blob/master/5.Thiet_lap_canh_bao.md
