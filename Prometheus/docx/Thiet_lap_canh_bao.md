@@ -4,14 +4,14 @@ Alerting hoạt động trên Prometheus với 2 thành phần:
 - Alerting rules
 - Alertmanager
 
-![](https://raw.githubusercontent.com/hocchudong/ghichep-prometheus/master/Images/alert.png)
+<img src=https://i.imgur.com/un6ifWo.png>
 
 - Cách hoạt động như sau:
   - 1. Prometheus-server sẽ xử lý các alert-rules.
   - 2. Nếu rules được match, Prometheus-server sẽ gửi thông tin đến Alertmanager.
   - 3. Alertmanager sẽ bắn cảnh báo đến nơi đã cấu hình.
 
-# 1. Alerting rules
+## 1. Alerting rules
 
 **Mô tả Alerting rules**
 
@@ -20,14 +20,14 @@ Alerting rules cho phép xác định các điều kiện đưa ra cảnh báo, 
 ```sh
 ALERT <alert name>
   IF <expression>
-  [ FOR <duration> ]
-  [ LABELS <label set> ]
-  [ ANNOTATIONS <label set> ]
+  FOR <duration>
+  LABELS <label set>
+  ANNOTATIONS <label set>
 ```
-
-- FOR: Chờ đợi trong 1 khoảng thời gian để đưa ra cảnh báo
-- LABELS: Đặt nhãn cho cảnh báo
-- ANNOTATIONS: Chứa thêm các thông tin cho cảnh báo
+Trong đó
+- `FOR`: Chờ đợi trong 1 khoảng thời gian để đưa ra cảnh báo
+- `LABELS`: Đặt nhãn cho cảnh báo
+- `ANNOTATIONS`: Chứa thêm các thông tin cho cảnh báo
 
 Ví dụ:
 ```sh
@@ -39,7 +39,6 @@ ALERT InstanceDown
   ANNOTATIONS {
     summary = "Instance {{ $labels.instance }} down",
     description = "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes.",
-  }
 
 # Alert for any instance that have a median request latency >1s.
 ALERT APIHighRequestLatency
@@ -48,7 +47,6 @@ ALERT APIHighRequestLatency
   ANNOTATIONS {
     summary = "High request latency on {{ $labels.instance }}",
     description = "{{ $labels.instance }} has a median request latency above 1s (current value: {{ $value }}s)",
-  }
 ```
 
 **Kiểm tra các cảnh báo đang hoạt động**
@@ -67,7 +65,7 @@ Nếu alert hoạt động sẽ có value là 1, ko hoạt động sẽ có valu
 
 Để gửi các thông báo đi ta cần tới thành phần **Alertmanager**
 
-# 2. Alertmanager
+## 2. Alertmanager
 
 - AlertManager đưa ra các thông báo với chế độ như im lặng (Silencing), ức chế (Inhibition), tập hợp (Grouping) và gửi thông báo qua email...
   - **Grouping:** Phân loại các cảnh báo theo group. Ví dụ ta cấu hình 100 server khi bị failed thì sẽ gửi cảnh báo đến sysadmin. Khi đó, sysadmin sẽ lập tức nhận 100 notification một lúc. Thay vì vậy, ta gom nhóm 100 server này vào 1 group, và sysadmin sẽ chỉ nhận được 1 notification mà thôi. Notification này sẽ chứa đầy đủ thông báo của 100 server này.
@@ -517,3 +515,5 @@ receivers:
     notify: true
 
 ```
+## Tài liệu tham khảo
+- https://medium.com/@abhishekbhardwaj510/alertmanager-integration-in-prometheus-197e03bfabdf
